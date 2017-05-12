@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_secure_password
   has_many :subscribed_tos, class_name: "User"
   has_many :subscribees, class_name: "User"
   has_many :pledges

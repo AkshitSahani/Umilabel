@@ -3,6 +3,9 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    # respond_to do |format|
+    #   format.html
+    # end
   end
 
   def show
@@ -42,7 +45,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :username)
+    params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirmation)
   end
 
   def load_user
