@@ -1,3 +1,12 @@
 WELCOME TO YOUR PROFILE!
 <br><br>
 Congrats you have successfully created your profile!
+
+<%= link_to 'Setup/edit profile', new_profile_path %><br>
+
+<%= image_tag @user.avatar.url(:thumb) %><br>
+<%= image_tag @user.background_image.url(:thumb) %><br>
+<%= @user.description %><br>
+<%= @user.tags %><br>
+<%= @user.founded_in %><br>
+<%= @user.studio_name %><br>

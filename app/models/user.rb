@@ -1,5 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://s3-us-west-2.amazonaws.com/abett-static/default-avatar.jpg"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+  has_attached_file :background_image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://s3-us-west-2.amazonaws.com/abett-static/default-avatar.jpg"
+  validates_attachment_content_type :background_image, content_type: /\Aimage\/.*\z/
+
   has_many :subscribed_tos, class_name: "User"
   has_many :subscribees, class_name: "User"
   has_many :pledges

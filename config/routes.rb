@@ -14,5 +14,8 @@ Rails.application.routes.draw do
 
   resources :users
 
+  get '/new_profile' => "users#new_profile", as: :new_profile
+  post '/create_profile' => 'users#create_profile', as: :create_profile
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

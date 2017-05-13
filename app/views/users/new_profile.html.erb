@@ -1,0 +1,25 @@
+SET UP YOUR PROFILE! WOOHOO!!
+
+<%= form_for @user, url: create_profile_path, method: :post do |f| %>
+
+<%= f.label "Studio Name" %>
+<%= f.text_field :studio_name %><br>
+
+<%= f.label "Tell us about youself" %>
+<%= f.text_field :description %><br>
+
+<%= f.label "Tell us your skills in the world of music" %>
+<%= f.text_field :tags %><br>
+
+<%= f.label "When was your studio founded" %>
+<%= f.text_field :founded_in %><br>
+
+<%= f.label "Upload your Profile picture" %>
+<%= f.file_field :avatar %><br>
+
+<%= f.label "Upload your Profile Background Image" %>
+<%= f.file_field :background_image %><br>
+
+<%= f.submit "Create Profile" %>
+
+<% end %>
