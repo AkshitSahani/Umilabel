@@ -10,15 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512223250) do
+ActiveRecord::Schema.define(version: 20170513204853) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
     t.integer  "owner_id"
     t.integer  "share_price"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "background_image_file_name"
+    t.string   "background_image_content_type"
+    t.integer  "background_image_file_size"
+    t.datetime "background_image_updated_at"
+    t.string   "document_1_file_name"
+    t.string   "document_1_content_type"
+    t.integer  "document_1_file_size"
+    t.datetime "document_1_updated_at"
+    t.string   "document_2_file_name"
+    t.string   "document_2_content_type"
+    t.integer  "document_2_file_size"
+    t.datetime "document_2_updated_at"
+    t.string   "document_3_file_name"
+    t.string   "document_3_content_type"
+    t.integer  "document_3_file_size"
+    t.datetime "document_3_updated_at"
   end
 
   create_table "pledges", force: :cascade do |t|

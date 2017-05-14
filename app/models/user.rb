@@ -10,4 +10,9 @@ class User < ApplicationRecord
   has_many :pledges
   has_many :rewards, through: :pledges
   has_many :campaigns
+
+  def self.search(search)
+    User.where("first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR username LIKE ? OR studio_name LIKE ? OR tags LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
+
 end

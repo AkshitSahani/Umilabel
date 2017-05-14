@@ -11,6 +11,18 @@
 
   <body>
 
+    <%= form_tag(campaigns_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %>
+      <%= submit_tag "Search", :name => nil %>
+    <% end %>
+
+    <% if flash[:notice] %>
+        <p id="notice"><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:alert] %>
+        <p id="alert"><%= flash[:alert] %></p>
+      <% end %>
+
     <%= yield %>
 
     <% if current_user %>
@@ -18,7 +30,7 @@
     <% else %>
       <%= link_to 'Login', new_session_path %> | <%= link_to 'Signup', new_user_path %>
     <% end %>
-    
+
     <br><br>
   </body>
 </html>

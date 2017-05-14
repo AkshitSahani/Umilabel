@@ -1,1 +1,15 @@
-Home page and campagins index page
+Home page and campaigns index page
+
+<% if @campaigns.blank? %>
+  <h4>There are no campaigns matching your search query '<%= params[:search] %>'.</h4>
+<% else %>
+  <%= @campaigns.map do |campaign| %>
+    <%= campaign.title %>
+  <% end %>
+<% end %>
+
+<% if @users.blank? %>
+  <h4>There are no users matching your search query '<%= params[:search] %>'.</h4>
+<% else %>
+<%= @users.map do |user| %><%= user.first_name  %> | <%= user.last_name %> | <%= user.username %> | <%= user.studio_name %><br><br><% end %>
+<% end %>

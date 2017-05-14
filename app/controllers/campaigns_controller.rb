@@ -3,6 +3,10 @@ class CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.all
+    if params[:search]
+      @campaigns = Campaign.search(params[:search])
+      @users = User.search(params[:search])
+    end
   end
 
   def show
@@ -15,7 +19,8 @@ class CampaignsController < ApplicationController
   def new
     @campaign = Campaign.new
     #investigate on the line below
-    # @campaign.rewards.build if !@campaign.rewards.any?
+    @campaign.rewards.build
+    # if !@campaign.rewards.any?
   end
 
   def edit
@@ -48,7 +53,7 @@ class CampaignsController < ApplicationController
 
   private
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :owner_id, :share_price,
+    params.require(:campaign).permit(:title, :description, :owner_id, :share_price, :avatar, :background_image, :document_1, :document_2, :document_3,
     rewards_attributes: [:campaign_id, :client, :percentage, :confirmed, :_destroy])
   end
 

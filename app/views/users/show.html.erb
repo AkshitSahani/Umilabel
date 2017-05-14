@@ -1,8 +1,7 @@
-WELCOME TO YOUR PROFILE!
-<br><br>
-Congrats you have successfully created your profile!
-
-<%= link_to 'Setup/edit profile', new_profile_path %><br>
+<% if @user.id == session[:user_id] %>
+  <h2>WELCOME TO YOUR PROFILE!</h2>
+  <%= link_to 'Setup/edit profile', new_profile_path %><br>
+<% end %>
 
 <%= image_tag @user.avatar.url(:thumb) %><br>
 <%= image_tag @user.background_image.url(:thumb) %><br>
@@ -10,3 +9,14 @@ Congrats you have successfully created your profile!
 <%= @user.tags %><br>
 <%= @user.founded_in %><br>
 <%= @user.studio_name %><br>
+
+
+<% if Subscription.where(subscribee_id: session[:user_id]).where(subscribed_to_id: @user.id).empty? %>
+  <div class="subscription_data" data-subscribee-id= '<%= session[:user_id] %>' data-subscribed-to-id= '<%= @user.id %>'>
+    <button class="subscribe">SUBSCRIBE</button>
+  </div>
+  <% else %>
+  <div class="subscription_data" data-subscribee-id= '<%= session[:user_id] %>' data-subscribed-to-id= '<%= @user.id %>' data-subscription-id='<%= (Subscription.where(subscribee_id: session[:user_id]).where(subscribed_to_id: @user.id))[0].id %>'>
+    <button class="subscribed">SUBSCRIBED!</button>
+  </div>
+  <% end %>

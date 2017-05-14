@@ -14,3 +14,29 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function(){
+  $('.subscribe').on('click', function(){
+    $.ajax({
+      url: '/subscriptions',
+      type: 'POST',
+      data:{ subscription: { subscribed_to_id: $('.subscription_data').attr('data-subscribed-to-id'),
+        subscribee_id: $('.subscription_data').attr('data-subscribee-id')}
+      }
+    }).done(function(){
+      $('.subscribe').html('SUBSCRIBED!');
+      location.reload();
+    })
+    });
+
+    $('.subscribed').on('click', function(){
+      $.ajax({
+        url: '/subscriptions/' + $('.subscription_data').attr('data-subscription-id'),
+        type: 'DELETE',
+      }).done(function(){
+        $('.subscribed').html('SUBSCRIBE');
+        location.reload();
+      })
+    });
+
+  })
