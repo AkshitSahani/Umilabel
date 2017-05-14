@@ -24,19 +24,12 @@ $(document).ready(function(){
         subscribee_id: $('.subscription_data').attr('data-subscribee-id')}
       }
     }).done(function(){
-      $('.subscribe').html('SUBSCRIBED!');
-      location.reload();
+      if($('.subscribe').html().trim() === 'SUBSCRIBE'){
+        $('.subscribe').html('SUBSCRIBED!');
+      }
+      else{
+        $('.subscribe').html('SUBSCRIBE')
+      }
     })
-    });
-
-    $('.subscribed').on('click', function(){
-      $.ajax({
-        url: '/subscriptions/' + $('.subscription_data').attr('data-subscription-id'),
-        type: 'DELETE',
-      }).done(function(){
-        $('.subscribed').html('SUBSCRIBE');
-        location.reload();
-      })
-    });
-
-  })
+  });
+})

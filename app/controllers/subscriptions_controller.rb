@@ -16,10 +16,11 @@ class SubscriptionsController < ApplicationController
   def create
     if request.xhr?
       @subscription = Subscription.new(subscription_params)
-      if Subscription.where(subscribed_to_id: subscription_params["subscribed_to_id"]).where(subscribee_id: subscription_params["subscribee_id"]).empty?
+      @existing_subscription = Subscription.where(subscribed_to_id: subscription_params["subscribed_to_id"]).where(subscribee_id: subscription_params["subscribee_id"])
+      if @existing_subscription.empty?
         @subscription.save
-      # else
-      #   (Subscription.where(subscribed_to_id: subscription_params["subscribed_to_id"]).where(subscribee_id: subscription_params["subscribee_id"])).destroy
+      else
+        @existing_subscription.destroy(@existing_subscription)
       end
     end
   end

@@ -10,13 +10,8 @@
 <%= @user.founded_in %><br>
 <%= @user.studio_name %><br>
 
-
-<% if Subscription.where(subscribee_id: session[:user_id]).where(subscribed_to_id: @user.id).empty? %>
+<% if session[:user_id] != @user.id %>
   <div class="subscription_data" data-subscribee-id= '<%= session[:user_id] %>' data-subscribed-to-id= '<%= @user.id %>'>
     <button class="subscribe">SUBSCRIBE</button>
   </div>
-  <% else %>
-  <div class="subscription_data" data-subscribee-id= '<%= session[:user_id] %>' data-subscribed-to-id= '<%= @user.id %>' data-subscription-id='<%= (Subscription.where(subscribee_id: session[:user_id]).where(subscribed_to_id: @user.id))[0].id %>'>
-    <button class="subscribed">SUBSCRIBED!</button>
-  </div>
-  <% end %>
+<% end %>
