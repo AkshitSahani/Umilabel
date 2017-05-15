@@ -1,6 +1,7 @@
 <% if @user.id == session[:user_id] %>
   <h2>WELCOME TO YOUR PROFILE!</h2>
   <%= link_to 'Setup/edit profile', new_profile_path %><br>
+  <%= link_to "Start a Campaign", new_campaign_path %>
 <% end %>
 
 <%= image_tag @user.avatar.url(:thumb) %><br>
@@ -15,3 +16,5 @@
     <button class="subscribe">SUBSCRIBE</button>
   </div>
 <% end %>
+
+<%= link_to "My Profile", user_path(session[:user_id]) %>

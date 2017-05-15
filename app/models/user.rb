@@ -17,4 +17,8 @@ class User < ApplicationRecord
     User.where("first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR username LIKE ? OR studio_name LIKE ? OR tags LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 
+  def self.split_tags(tags)
+    array = tags.split(',')
+  end
+
 end

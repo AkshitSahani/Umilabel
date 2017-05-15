@@ -1,9 +1,9 @@
-Home page and campaigns index page
+Home page and campaigns index page <br><br>
 
 <% if @campaigns.blank? %>
   <h4>There are no campaigns matching your search query '<%= params[:search] %>'.</h4>
 <% else %>
-  <%= @campaigns.map do |campaign| %>
+  <% @campaigns.map do |campaign| %>
     <%= campaign.title %>
   <% end %>
 <% end %>
@@ -11,5 +11,11 @@ Home page and campaigns index page
 <% if @users.blank? %>
   <h4>There are no users matching your search query '<%= params[:search] %>'.</h4>
 <% else %>
-<%= @users.map do |user| %><%= user.first_name  %> | <%= user.last_name %> | <%= user.username %> | <%= user.studio_name %><br><br><% end %>
+  <% @users.map do |user| %>
+    <%= link_to user_path(user.id) do %>
+    <div>
+      <%= user.first_name  %> | <%= user.last_name %> | <%= user.username %> | <%= user.studio_name %>
+    </div>
+  <% end %>
+ <% end %>
 <% end %>

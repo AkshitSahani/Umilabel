@@ -30,7 +30,7 @@ class PledgesController < ApplicationController
 
   private
   def pledge_params
-    params.require(:pledge).permit(:campaign_id, :reward_id, :user_id)
+    params.require(:pledge).permit(:reward_id, :user_id)
   end
 
 end

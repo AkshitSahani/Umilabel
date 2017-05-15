@@ -10,10 +10,15 @@
 
 
   <body>
+    <% if session[:user_id] %>
+      <%= link_to 'Umilabel', root_path %>
 
-    <%= form_tag(campaigns_path, :method => "get", id: "search-form") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %>
-      <%= submit_tag "Search", :name => nil %>
+      <%= link_to "My Profile", user_path(session[:user_id]) %>
+
+      <%= form_tag(campaigns_path, :method => "get", id: "search-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %>
+        <%= submit_tag "Search", :name => nil %>
+      <% end %>
     <% end %>
 
     <% if flash[:notice] %>

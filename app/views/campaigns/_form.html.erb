@@ -1,0 +1,34 @@
+<%= form_for @campaign do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %><br>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %><br>
+
+  <%= f.label :Price_per_share %>
+  <%= f.number_field :share_price %><br>
+
+  <%= f.label :Upload_an_avatar %>
+  <%= f.file_field :avatar %><br>
+
+  <%= f.label :Upload_a_background_image %>
+  <%= f.file_field :background_image%><br>
+
+  <h2>Royalty Shares</h2>
+
+  <%= f.fields_for :rewards do |r| %>
+    <%= render 'reward_fields', f: r %>
+  <% end %>
+  <%= link_to_add_association 'add Royalty Share option', f, :rewards %><br>
+
+  <%= f.label :Upload_legal_document_1 %>
+  <%= f.file_field :document_1 %><br>
+
+  <%= f.label :Upload_legal_document_2 %>
+  <%= f.file_field :document_2 %><br>
+
+  <%= f.label :Upload_legal_document_3 %>
+  <%= f.file_field :document_3 %><br>
+
+  <%= f.submit 'Create Campaign' %>
+<% end %>
