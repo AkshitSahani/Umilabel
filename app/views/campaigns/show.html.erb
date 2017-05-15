@@ -1,0 +1,24 @@
+<h2> <%= (User.find(@campaign.owner.id)).studio_name %> just released an IPO for the <%= @campaign.title %><br> album </h2>
+<%= image_tag @campaign.album_cover.url(:medium) %><br>
+
+<%= image_tag @campaign.avatar.url(:medium) %>
+<%= image_tag @campaign.background_image.url(:medium) %><br>
+
+<h3><%= @campaign.title %> album </h3>
+
+<%= @campaign.description %><br>
+
+owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@campaign.owner.id)).last_name  %><br>
+
+<h2> Royalty Shares being offered </h2>
+<% @campaign.rewards.each do |reward| %>
+  <%= reward.client %> : <%= reward.percentage %>% <br>
+<% end %><br>
+
+<% if @campaign.video_link != "" %>
+<%= raw(Campaign.youtube_embed(@campaign.video_link)) %>
+<% end %>
+
+<%= link_to 'legal doc 1', @campaign.document_1.url %><br>
+<%= link_to 'legal doc 2', @campaign.document_2.url %><br>
+<%= link_to 'legal doc 3', @campaign.document_3.url %><br>

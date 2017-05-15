@@ -14,13 +14,21 @@
   <%= f.label :Upload_a_background_image %>
   <%= f.file_field :background_image%><br>
 
-  <h2>Royalty Shares</h2>
+  <%= f.label :Upload_an_album_cover %>
+  <%= f.file_field :album_cover%><br>
 
+  <%= f.label :Add_a_video %>
+  <%= f.text_field :video_link%><br>
+
+  <h2>Royalty Shares</h2>
+<div id="rewards">
   <%= f.fields_for :rewards do |r| %>
     <%= render 'reward_fields', f: r %>
   <% end %>
-  <%= link_to_add_association 'add Royalty Share option', f, :rewards %><br>
-
+</div>
+<div class="links">
+  <%= link_to_add_association 'add Royalty Share option', f, :rewards, partial: 'reward_fields' %><br>
+</div>
   <%= f.label :Upload_legal_document_1 %>
   <%= f.file_field :document_1 %><br>
 

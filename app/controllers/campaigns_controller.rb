@@ -29,7 +29,8 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = Campaign.new(campaign_params)
-
+    @campaign.owner_id = current_user.id
+    byebug
     if @campaign.save
       redirect_to campaign_url(@campaign)
     else
@@ -53,7 +54,7 @@ class CampaignsController < ApplicationController
 
   private
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :owner_id, :share_price, :avatar, :background_image, :document_1, :document_2, :document_3,
+    params.require(:campaign).permit(:title, :description, :owner_id, :share_price, :avatar, :background_image, :album_cover, :video_link, :document_1, :document_2, :document_3,
     rewards_attributes: [:id, :campaign_id, :client, :percentage, :confirmed, :_destroy])
   end
 
