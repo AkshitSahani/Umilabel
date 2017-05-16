@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'rewards/index'
+
   root 'sessions#index'
 
   resources :sessions, only: [:new, :create, :destroy]

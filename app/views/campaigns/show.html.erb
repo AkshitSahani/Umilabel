@@ -12,7 +12,7 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 
 <h2> Royalty Shares being offered </h2>
 <% @campaign.rewards.each do |reward| %>
-<div class="reward" data-reward-id="<%= reward.id %>">
+<div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
   <%= reward.client %> : <%= reward.percentage %>%
   <button class="pledge">Pledge</button>
 </div>
