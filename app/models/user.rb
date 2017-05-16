@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   def self.split_tags(tags)
     array = tags.split(',')
+    return array
   end
 
 end

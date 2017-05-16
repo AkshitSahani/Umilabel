@@ -40,4 +40,11 @@ class Campaign < ApplicationRecord
     %Q{<iframe title="YouTube video player" width="640" height="400" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe>}
   end
 
+  def self.pie_chart(campaign)
+    array = []
+    campaign.rewards.each do |reward|
+      array << [reward.client, reward.percentage]
+    end
+    array
+  end
 end

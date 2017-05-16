@@ -11,16 +11,11 @@ class CampaignsController < ApplicationController
 
   def show
 
-  #   if current_user
-  #  @review = @campaign.reviews.build
-  # end
   end
 
   def new
     @campaign = Campaign.new
-    #investigate on the line below
     @campaign.rewards.build
-    # if !@campaign.rewards.any?
   end
 
   def edit

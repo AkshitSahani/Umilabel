@@ -12,7 +12,10 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 
 <h2> Royalty Shares being offered </h2>
 <% @campaign.rewards.each do |reward| %>
-  <%= reward.client %> : <%= reward.percentage %>% <br>
+<div class="reward" data-reward-id="<%= reward.id %>">
+  <%= reward.client %> : <%= reward.percentage %>%
+  <button class="pledge">Pledge</button>
+</div>
 <% end %><br>
 
 <% if @campaign.video_link != "" %>
@@ -22,3 +25,5 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 <%= link_to 'legal doc 1', @campaign.document_1.url %><br>
 <%= link_to 'legal doc 2', @campaign.document_2.url %><br>
 <%= link_to 'legal doc 3', @campaign.document_3.url %><br>
+
+<%= render 'piechart' %>

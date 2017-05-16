@@ -1,19 +1,21 @@
 class PledgesController < ApplicationController
+before_action :load_pledge, only: [:show, :edit, :update, :destroy]
 
-  # def index
-  #   #code
-  # end
+  def index
+    #code
+  end
 
   def show
     #code
   end
 
   def new
-    #code
+    @pledge = Pledge.new
   end
 
   def create
-    #code
+    @pledge = Pledge.new(pledge_params)
+    @pledge.save
   end
 
   def edit
@@ -25,12 +27,16 @@ class PledgesController < ApplicationController
   end
 
   def destroy
-    #code
+    @pledge.destroy
   end
 
   private
   def pledge_params
-    params.require(:pledge).permit(:reward_id, :user_id)
+    params.require(:pledge).permit(:reward_id, :user_id, :percentage_pledged)
+  end
+
+  def load_pledge
+    @pledge = Pledge.find(params[:id])
   end
 
 end

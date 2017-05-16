@@ -33,4 +33,8 @@ $(document).ready(function(){
       }
     })
   });
+
+  $('.pledge').on('click', function(){
+    
+  });
 })

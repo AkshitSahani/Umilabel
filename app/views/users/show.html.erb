@@ -7,7 +7,15 @@
 <%= image_tag @user.avatar.url(:thumb) %><br>
 <%= image_tag @user.background_image.url(:thumb) %><br>
 <%= @user.description %><br>
-<%= @user.tags %><br>
+
+<% if @user.tags %>
+  <% (User.split_tags(@user.tags)).each do |tag| %>
+    <div class="user-tag">
+      <%= tag %>
+    </div>
+  <% end %>
+<% end %>
+
 <%= @user.founded_in %><br>
 <%= @user.studio_name %><br>
 
@@ -18,3 +26,7 @@
 <% end %>
 
 <%= link_to "My Profile", user_path(session[:user_id]) %>
+<h2> My Campaigns </h2>
+<% @user.owned_campaigns.each do |campaign| %>
+  <%= link_to "#{campaign.title}", campaign_url(campaign.id) %><br>
+<% end %>
