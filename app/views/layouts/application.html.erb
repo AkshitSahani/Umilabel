@@ -4,13 +4,16 @@
     <title>Umilabel</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
 
   <body>
     <% if session[:user_id] %>
+
+      <div id="current-user"></div>
+
       <%= link_to 'Umilabel', root_path %>
 
       <%= link_to "My Profile", user_path(session[:user_id]) %>
@@ -22,10 +25,10 @@
     <% end %>
 
     <% if flash[:notice] %>
-        <p id="notice"><%= flash[:notice] %></p>
+        <p id="notice"><%= flash.now[:notice] %></p>
       <% end %>
       <% if flash[:alert] %>
-        <p id="alert"><%= flash[:alert] %></p>
+        <p id="alert"><%= flash.now[:alert] %></p>
       <% end %>
 
     <%= yield %>

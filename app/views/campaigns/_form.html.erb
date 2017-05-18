@@ -21,6 +21,8 @@
   <%= f.text_field :video_link%><br>
 
   <h2>Royalty Shares</h2>
+  <h3> Disclaimer </h3>
+  <p>8% offering costs go to Umilabel directly. Please offer only 92% of available shares</p>
 <div id="rewards">
   <%= f.fields_for :rewards do |r| %>
     <%= render 'reward_fields', f: r %>

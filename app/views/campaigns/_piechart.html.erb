@@ -21,7 +21,9 @@
           method: 'GET',
           dataType: 'json'
         }).done(function(response){
+          response = response.concat([["Umilabel", 8]])
 
+          console.log(response);
 
         // Create the data table.
         var data = new google.visualization.DataTable();

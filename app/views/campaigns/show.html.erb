@@ -11,6 +11,8 @@
 owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@campaign.owner.id)).last_name  %><br>
 
 <h2> Royalty Shares being offered </h2>
+<h3> Disclaimer </h3>
+<p>8% offering costs go to Umilabel directly. Please offer only 92% of available shares</p>
 <% @campaign.rewards.each do |reward| %>
 <div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
   <%= reward.client %> : <%= reward.percentage %>%
@@ -28,5 +30,7 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 
 <%= render 'piechart' %>
 <% if @campaign.owner_id != current_user.id %>
+<div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
   <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+</div>
 <% end %>

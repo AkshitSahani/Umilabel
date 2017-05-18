@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517192401) do
+ActiveRecord::Schema.define(version: 20170518191558) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20170517192401) do
     t.integer  "receiver_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["author_id"], name: "index_conversations_on_author_id", unique: true
-    t.index ["receiver_id"], name: "index_conversations_on_receiver_id", unique: true
+    t.index ["author_id"], name: "index_conversations_on_author_id"
+    t.index ["receiver_id"], name: "index_conversations_on_receiver_id"
   end
 
   create_table "personal_messages", force: :cascade do |t|

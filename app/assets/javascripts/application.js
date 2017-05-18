@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 //= require cocoon
-//= require conversations
+//= require cable
 
 $(document).ready(function(){
+
   $('.subscribe').on('click', function(){
     $.ajax({
       url: '/subscriptions',
@@ -35,7 +35,26 @@ $(document).ready(function(){
     })
   });
 
-  $('.pledge').on('click', function(){
+  setTimeout(function() {
+    $('#flash').slideUp();
+  }, 3000);
 
-  });
-})
+  setTimeout(function() {
+    $('#notice').slideUp();
+  }, 2000);
+
+  var messager = $('<div>').addClass('messager');
+
+  $('.pledge-convo').click(function(e){
+    e.preventDefault();
+    $.ajax({
+      url:'/personal_messages/new',
+      method: 'GET',
+      data: {
+        receiver_id: $(this).attr('data-receiver-id')
+      }
+    }).done(function(data){
+      $('body').append($(messager.html(data)));
+    })
+  })
+});
