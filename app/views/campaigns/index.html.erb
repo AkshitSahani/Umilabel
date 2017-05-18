@@ -4,7 +4,7 @@ Home page and campaigns index page <br><br>
   <h4>There are no campaigns matching your search query '<%= params[:search] %>'.</h4>
 <% else %>
   <% @campaigns.map do |campaign| %>
-    <%= campaign.title %>
+    <%= link_to "#{campaign.title}", campaign_path(campaign) %>
   <% end %>
 <% end %>
 

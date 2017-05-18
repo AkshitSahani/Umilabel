@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require cocoon
+//= require conversations
 
 $(document).ready(function(){
   $('.subscribe').on('click', function(){
@@ -35,6 +36,6 @@ $(document).ready(function(){
   });
 
   $('.pledge').on('click', function(){
-    
+
   });
 })

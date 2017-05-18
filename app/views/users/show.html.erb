@@ -4,6 +4,8 @@
   <%= link_to "Start a Campaign", new_campaign_path %>
 <% end %>
 
+<%= link_to 'Inbox', conversations_path %>
+
 <%= image_tag @user.avatar.url(:thumb) %><br>
 <%= image_tag @user.background_image.url(:thumb) %><br>
 <%= @user.description %><br>

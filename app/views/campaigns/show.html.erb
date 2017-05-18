@@ -27,3 +27,6 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 <%= link_to 'legal doc 3', @campaign.document_3.url %><br>
 
 <%= render 'piechart' %>
+<% if @campaign.owner_id != current_user.id %>
+  <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+<% end %>

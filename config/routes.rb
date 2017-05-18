@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'rewards/index'
-
   root 'sessions#index'
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -20,6 +18,10 @@ Rails.application.routes.draw do
   post '/create_profile' => 'users#create_profile', as: :create_profile
 
   resources :charges
+
+  resources :conversations
+
+  resources :personal_messages
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

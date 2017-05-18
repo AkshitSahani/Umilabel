@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515201652) do
+ActiveRecord::Schema.define(version: 20170517192401) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -44,6 +44,25 @@ ActiveRecord::Schema.define(version: 20170515201652) do
     t.integer  "album_cover_file_size"
     t.datetime "album_cover_updated_at"
     t.string   "video_link"
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "author_id"
+    t.integer  "receiver_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["author_id"], name: "index_conversations_on_author_id", unique: true
+    t.index ["receiver_id"], name: "index_conversations_on_receiver_id", unique: true
+  end
+
+  create_table "personal_messages", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id"], name: "index_personal_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_personal_messages_on_user_id"
   end
 
   create_table "pledges", force: :cascade do |t|
