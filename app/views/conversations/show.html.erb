@@ -7,9 +7,11 @@
 
   <%= form_for @personal_message do |f| %>
     <%= hidden_field_tag 'conversation_id', @conversation.id %>
+    <%= hidden_field_tag 'message_receiver_id', @conversation.with(current_user).id %>
     <%= f.label :body %>
     <%= f.text_area :body %>
-
+<div class="sendmessage">
     <%= f.submit 'Send message' %>
+</div>
   <% end %>
 </div>

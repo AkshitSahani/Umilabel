@@ -43,6 +43,10 @@ $(document).ready(function(){
     $('#notice').slideUp();
   }, 2000);
 
+  $('.sendmessage').on('click', function(){
+    location.reload();
+  })
+
   var messager = $('<div>').addClass('messager').css('display', 'none');
   $('body').append(messager);
 

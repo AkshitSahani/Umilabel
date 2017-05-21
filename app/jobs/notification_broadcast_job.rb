@@ -3,14 +3,15 @@ class NotificationBroadcastJob < ApplicationJob
 
     def perform(personal_message)
       message = render_message(personal_message)
-      ActionCable.server.broadcast "notifications_channel",
+      ActionCable.server.broadcast "notifications_#{personal_message.receiver_id}_channel",
                                    message: message,
-                                   conversation_id: personal_message.conversation.id
-      
-      ActionCable.server.broadcast "notifications_channel",
+                                   conversation_id: personal_message.conversation.id,
+                                   message_receiver_id: personal_message.receiver_id
+
+      ActionCable.server.broadcast "notifications_#{personal_message.receiver_id}_channel",
                              notification: render_notification(personal_message),
-                             message: message,
-                             conversation_id: personal_message.conversation.id
+                             conversation_id: personal_message.conversation.id,
+                             message_receiver_id: personal_message.receiver_id
     end
 
     private

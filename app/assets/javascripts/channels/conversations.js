@@ -19,10 +19,11 @@ $(document).ready( function() {
         console.log('if is true');
         messages.append(data['message']);
         return messages_to_bottom();
-      } else {
+      }
+      else {
         console.log('else is true');
         if ($('#conversations').size() > 0) { $.getScript('/conversations'); }
-  
+
         if (data['notification']) {
           console.log("notified");
           return $('body').append(data['notification']);
@@ -30,8 +31,8 @@ $(document).ready( function() {
       }
     },
 
-    send_message(message, conversation_id) {
-      return this.perform('send_message', {message, conversation_id});
+    send_message(message, conversation_id, message_receiver_id) {
+      return this.perform('send_message', {message, conversation_id, message_receiver_id});
     }
   }
     );
@@ -46,8 +47,8 @@ $(document).ready( function() {
     return $('#new_personal_message').submit(function(e) {
       let $this = $(this);
       let textarea = $this.find('#personal_message_body');
-      if ($.trim(textarea.val()).length > 1) {
-        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val());
+      if ($.trim(textarea.val()).length > 0) {
+        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#message_receiver_id').val());
         textarea.val('');
       }
       e.preventDefault();

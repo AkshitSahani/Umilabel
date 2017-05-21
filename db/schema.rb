@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518191558) do
+ActiveRecord::Schema.define(version: 20170521171025) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -58,11 +58,13 @@ ActiveRecord::Schema.define(version: 20170518191558) do
   create_table "personal_messages", force: :cascade do |t|
     t.text     "body"
     t.integer  "conversation_id"
-    t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "author_id"
+    t.integer  "receiver_id"
+    t.index ["author_id"], name: "index_personal_messages_on_author_id"
     t.index ["conversation_id"], name: "index_personal_messages_on_conversation_id"
-    t.index ["user_id"], name: "index_personal_messages_on_user_id"
+    t.index ["receiver_id"], name: "index_personal_messages_on_receiver_id"
   end
 
   create_table "pledges", force: :cascade do |t|
