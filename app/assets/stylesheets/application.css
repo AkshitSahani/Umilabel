@@ -25,7 +25,7 @@
   bottom: 10px;
   width: 300px;
   padding: 10px;
-  border: 1px solid black;
+  border: 10px solid red;
   background-color: #fff;
   .close {cursor: pointer}
 }
