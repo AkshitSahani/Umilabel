@@ -9,7 +9,6 @@
 <%= @campaign.description %><br>
 
 owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@campaign.owner.id)).last_name  %><br>
-
 <h2> Royalty Shares being offered </h2>
 <h3> Disclaimer </h3>
 <p>8% offering costs go to Umilabel directly. Please offer only 92% of available shares</p>
@@ -20,6 +19,10 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 </div>
 <% end %><br>
 
+<div class="messager"> Messenger
+  <span class="close-chat">X</span>
+  <span class="chat-content"></span>
+</div>
 <% if @campaign.video_link != "" %>
 <%= raw(Campaign.youtube_embed(@campaign.video_link)) %>
 <% end %>

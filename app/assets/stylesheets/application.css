@@ -29,3 +29,12 @@
   background-color: #fff;
   .close {cursor: pointer}
 }
+
+.messager {
+    width:25%;
+    z-index:2;
+    position:absolute;
+    right:-1000px;
+    background:#f90;
+    color:#000;
+}

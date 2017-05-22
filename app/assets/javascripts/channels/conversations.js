@@ -14,18 +14,17 @@ $(document).ready( function() {
       // Called when the subscription has been terminated by the server
 
     received(data) {
-      console.log(data);
+
       if ((messages.size() > 0) && (messages.data('conversation-id') === data['conversation_id'])) {
-        console.log('if is true');
         messages.append(data['message']);
         return messages_to_bottom();
       }
       else {
-        console.log('else is true');
+
         if ($('#conversations').size() > 0) { $.getScript('/conversations'); }
 
         if (data['notification']) {
-          console.log("notified");
+
           return $('body').append(data['notification']);
         }
       }

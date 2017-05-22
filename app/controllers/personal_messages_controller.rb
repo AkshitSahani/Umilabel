@@ -4,11 +4,15 @@ class PersonalMessagesController < ApplicationController
   def new
     redirect_to conversation_path(@conversation) and return if @conversation
     @personal_message = current_user.sent_personal_messages.build
+
+      respond_to do |format|
+        format.html { render :layout => false if request.xhr? }
+    end
   end
 
   def create
     @conversation ||= Conversation.create(author_id: current_user.id, receiver_id: @receiver.id)
-    @personal_message = current_user.sent_personal_messages.build(body: personal_message_params["body"], receiver_id: @receiver.id)
+    @personal_message = current_user.sent_personal_messages.build(body: params[:body], receiver_id: @receiver.id)
     @personal_message.conversation_id = @conversation.id
     @personal_message.save!
 

@@ -18,6 +18,9 @@
 
 $(document).ready(function(){
 
+  var messages = $('#conversation-body');
+  let messages_to_bottom = () => messages.scrollTop(messages.prop("scrollHeight"));
+
   $('.subscribe').on('click', function(){
     $.ajax({
       url: '/subscriptions',
@@ -47,8 +50,6 @@ $(document).ready(function(){
     location.reload();
   })
 
-  var messager = $('<div>').addClass('messager').css('display', 'none');
-  $('body').append(messager);
 
   $('.pledge-convo').click(function(e){
     e.preventDefault();
@@ -59,16 +60,53 @@ $(document).ready(function(){
         receiver_id: $(this).attr('data-receiver-id')
       }
     }).done(function(data){
-      $('.messager').html(data);
+      console.log(data);
+      $('.chat-content').html(data);
+      $('.sendmessage > input').addClass('campaign-submit');
+      $('.sendmessage').removeClass('sendmessage');
+      $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
 
       var hidden = $('.messager');
-    if (hidden.hasClass('visible')){
-      console.log('if');
-        hidden.animate({left:"-1000px"}).removeClass('visible');
-    } else {
-      console.log('else');
-        hidden.show().animate({left:"0px"}).addClass('visible');
-    }
+      hidden.show().animate({right:"0px"}).addClass('visible');
     })
+  })
+
+  $('body').delegate('.campaign-submit', 'click', function(e){
+    console.log('clicking');
+    e.preventDefault();
+    var messageSubmit = $('<div>', {class: 'campaign-message-submit', text: "Your message has successfully been sent!"});
+    var message = $('.new_personal_message textarea').val();
+
+    $.ajax({
+      url:'/personal_messages',
+      method: "POST",
+      data:{
+        body: message,
+        receiver_id: $('.pledge-convo').attr('data-receiver-id')
+      }
+    }).done(function(data){
+      $('.new_personal_message textarea').val('');
+      $.ajax({
+        url:'/personal_messages/new',
+        method: 'GET',
+        data: {
+          receiver_id: $('.pledge-convo').attr('data-receiver-id')
+        }
+      }).done(function(data){
+        $('.chat-content').html(data);
+        $('.sendmessage > input').addClass('campaign-submit');
+        $('.sendmessage').removeClass('sendmessage');
+        $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
+      })
+    })
+
+    $('body').append(messageSubmit);
+    setTimeout(function(){
+      $(messageSubmit).slideUp();
+    }, 2000);
+  })
+
+  $('body').delegate('.close-chat', 'click', function(){
+    $('.messager').animate({right:"-1000px"}).removeClass('visible');
   })
 });
