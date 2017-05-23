@@ -18,8 +18,8 @@
 
 $(document).ready(function(){
 
-  var messages = $('#conversation-body');
-  let messages_to_bottom = () => messages.scrollTop(messages.prop("scrollHeight"));
+  // var messages = $('#conversation-body');
+  // let messages_to_bottom = () => messages.scrollTop(messages.prop("scrollHeight"));
 
   $('.subscribe').on('click', function(){
     $.ajax({
@@ -60,7 +60,6 @@ $(document).ready(function(){
         receiver_id: $(this).attr('data-receiver-id')
       }
     }).done(function(data){
-      console.log(data);
       $('.chat-content').html(data);
       $('.sendmessage > input').addClass('campaign-submit');
       $('.sendmessage').removeClass('sendmessage');
@@ -109,4 +108,73 @@ $(document).ready(function(){
   $('body').delegate('.close-chat', 'click', function(){
     $('.messager').animate({right:"-1000px"}).removeClass('visible');
   })
-});
+
+  $('.pledge-search-submit').on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+      url:'/campaigns',
+      method: 'GET',
+      dataType: 'json',
+      data:{
+        search: $('.pledge-search > input').val()
+      }
+    }).done(function(data){
+      $('.pledge-search-results').html('');
+      $('.pledge-search-results').append($('<h5>').html('Click on the desired user'));
+      $.each(data, function( j, i){
+        $('.pledge-search-results').append(
+          $('<div>', {
+            text: ''+ i['first_name'] + ' ' + i['last_name'] + ' | ' + i['studio_name'] + '',
+            id: i['id'],
+            class: 'allocation-searched-user'
+            }
+          )
+        );
+      })
+  })
+})
+
+$('body').delegate('.allocation-searched-user', 'click', function(){
+  $(this).css('text-decoration', 'underline red').addClass('selected');
+  var name = $(this).html();
+  $('.allocate-name').val(name);
+})
+
+$('.submit-shares').on('click', function(e){
+  e.preventDefault();
+  $.ajax({
+    url:'/pledges',
+    method: "POST",
+    data:{ pledge:{
+      reward_id: $('.allocation').attr('data-reward-id'),
+      percentage_pledged: $('#allocate-percentage').val(),
+      user_id: $('.selected').attr('id')
+    }}
+  }).done(function(){
+    $('body').append($('<div>',{
+      text: 'The shares have been successfully allocated',
+      class: 'allocation-success'
+    }))
+
+    setTimeout(function(){
+      $('.allocation-success').slideUp()
+    }, 2000)
+
+    $('.allocation').fadeOut('slow');
+  }).fail(function(){
+    $('body').append($('<div>',{
+      text: 'Oops! Something went wrong. Please try again with all the fields completed',
+      class: 'allocation-failure'
+    }))
+
+    setTimeout(function(){
+      $('.allocation-failure').slideUp()
+    }, 2000)
+  })
+})
+
+  $('.allocate').on('click', function(){
+    $('.allocation').fadeIn('100').attr('data-reward-id', ($(this).parent().attr('data-reward-id')));
+
+  })
+})

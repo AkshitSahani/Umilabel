@@ -7,10 +7,13 @@ class CampaignsController < ApplicationController
       @campaigns = Campaign.search(params[:search])
       @users = User.search(params[:search])
     end
+      respond_to do |format|
+        format.html { render :layout => false if request.xhr? }
+        format.json { render json: @users }
+    end
   end
 
   def show
-
   end
 
   def new

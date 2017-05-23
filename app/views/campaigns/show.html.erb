@@ -2,6 +2,10 @@
 <%= image_tag @campaign.album_cover.url(:medium) %><br>
 
 <%= image_tag @campaign.avatar.url(:medium) %>
+<div class="messager"> Messenger
+  <span class="close-chat">X</span>
+  <span class="chat-content"></span>
+</div>
 <%= image_tag @campaign.background_image.url(:medium) %><br>
 
 <h3><%= @campaign.title %> album </h3>
@@ -15,14 +19,26 @@ owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@cam
 <% @campaign.rewards.each do |reward| %>
 <div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
   <%= reward.client %> : <%= reward.percentage %>%
-  <button class="pledge">Pledge</button>
+  <% if !(reward.client.include?('Myself') || reward.client.include?('myself') || reward.client.include?('investor') || reward.client.include?('Investor'))%>
+  <button class="allocate"> Allocate </button>
+  <% end %>
 </div>
 <% end %><br>
+<div class="allocation">
+  <h3>Allocate shares</h3>
+  <%= form_tag campaign_path(@campaign) do %>
+  <span class="pledge-search"><%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %></span>
+  <span class="pledge-search-submit"><%= submit_tag "Search", :name => nil %></span>
+  <div class="pledge-search-results"></div><br>
+  <%= form_tag campaign_path(@campaign) do %>
+  <%= label_tag(:name, "Name") %>
+<input class="allocate-name" name="person[name]" type="text"/>
+  Percentage <input id="allocate-percentage" min="0.0" name="pledge[percentage]" step="0.5" type="number" />
+  <span class="submit-shares"><%= submit_tag "Send shares", :name => nil %></span>
+  <% end %>
+  <% end %>
+</div><br>
 
-<div class="messager"> Messenger
-  <span class="close-chat">X</span>
-  <span class="chat-content"></span>
-</div>
 <% if @campaign.video_link != "" %>
 <%= raw(Campaign.youtube_embed(@campaign.video_link)) %>
 <% end %>

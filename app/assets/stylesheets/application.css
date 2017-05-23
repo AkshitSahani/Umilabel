@@ -38,3 +38,7 @@
     background:#f90;
     color:#000;
 }
+
+.allocation {
+  display: none;
+}
