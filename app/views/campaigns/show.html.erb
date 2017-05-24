@@ -1,59 +1,96 @@
-<h2> <span class="campaign-studio-name"><%= (User.find(@campaign.owner.id)).studio_name %></span> just released an IPO for the <span class="campaign-title"><%= @campaign.title %> </span> <br> album </h2>
-<%= image_tag @campaign.album_cover.url(:medium) %><br>
+<div class="left-half">
+  <div class="title-img-container">
+    <div class="campaigner-img-sml"><%= image_tag @campaign.avatar.url(:thumb) %>
+    </div>
 
-<%= image_tag @campaign.avatar.url(:medium) %>
-<div class="messager"> Messenger
-  <span class="close-chat">X</span>
-  <span class="chat-content"></span>
+    <div>
+      <h2> <span class="campaign-studio-name"><%= (User.find(@campaign.owner.id)).studio_name %></span> just released an IPO for the <span class="campaign-title"><%= @campaign.title %> </span> <br> album </h2>
+    </div>
+  </div>
+  <%= image_tag @campaign.album_cover.url(:medium) %>
+  <div class="ipo-now-avail"> IPO now available for <%= User.find(@campaign.owner.id).studio_name %>'s upcoming album "<%= @campaign.title %>"
+  </div>
 </div>
-<%= image_tag @campaign.background_image.url(:medium) %><br>
 
-<h3><%= @campaign.title %> album </h3>
+<div class="right-half">
+  <div class="campaign-top-half">
+    <div class="campaign-background">
+      <%= image_tag @campaign.background_image.url(:medium) %>
+    </div>
 
-<%= @campaign.description %><br>
+    <div class="campaigner-avatar">
+      <%= image_tag @campaign.avatar.url(:medium) %>
+    </div>
 
-owned by: <%= (User.find(@campaign.owner.id)).first_name  %> <%= (User.find(@campaign.owner.id)).last_name  %><br>
-<h2> Royalty Shares being offered </h2>
-<h3> Disclaimer </h3>
-<p>8% offering costs go to Umilabel directly. Please offer only 92% of available shares</p>
-<div class="reward-offering">
-<% @campaign.rewards.each do |reward| %>
-<div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
-  <%= reward.client %> : <%= (reward.percentage) - (reward.pledges.sum(:percentage_pledged)) %>%
-  <% if current_user.id == @campaign.owner_id %>
-    <% if !(reward.client.include?('Myself') || reward.client.include?('myself') || reward.client.include?('investor') || reward.client.include?('Investor'))%>
-    <button class="allocate"> Allocate </button>
+    <div class="campaign-title">
+      <h3><%= @campaign.title %> album </h3>
+    </div>
+
+    <div class="campaign-desc">
+      <%= @campaign.description %>
+    </div>
+  </div>
+  <div class="messager"> Messenger
+    <span class="close-chat">X</span>
+    <span class="chat-content"></span>
+  </div>
+
+  <div class="royalty-intial">
+    <h2> Royalty Shares initial release </h2>
+    <!-- <h3> Disclaimer </h3>
+    <p>8% offering costs go to Umilabel directly. -->
+    <div class="rewards-offering">
+    <% @campaign.rewards.each do |reward| %>
+      <div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
+        <%= reward.client %> : <%= reward.percentage %>%
+        <% if current_user.id == @campaign.owner_id %>
+          <% if !(reward.client.include?('Myself') || reward.client.include?('myself') || reward.client.include?('investor') || reward.client.include?('Investor') || reward.client.include?('not-offered') || reward.client.include?('Not-offered'))%>
+          <button class="allocate user_is_campaigner"> Allocate </button>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
-</div>
-<% end %>
-</div>
-<div class="allocation">
-  <h3>Allocate shares</h3>
-  <%= form_tag campaign_path(@campaign) do %>
-  <span class="pledge-search"><%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %></span>
-  <span class="pledge-search-submit"><%= submit_tag "Search", :name => nil %></span>
-  <div class="pledge-search-results"></div><br>
-  <%= form_tag campaign_path(@campaign) do %>
-  <%= label_tag(:name, "Name") %>
-<input class="allocate-name" name="person[name]" type="text"/>
-  Percentage <input id="allocate-percentage" min="0.0" name="pledge[percentage]" step="0.5" type="number" />
-  <span class="submit-shares"><%= submit_tag "Send shares", :name => nil %></span>
-  <% end %>
-  <% end %>
-</div><br>
+    </div>
+  </div>
 
-<% if @campaign.video_link != "" %>
-<%= raw(Campaign.youtube_embed(@campaign.video_link)) %>
-<% end %>
+  <div class="current-shares-container">
+    <div class="buy-trade">Buy shares/trade skills for shares</div>
+    <%= render 'piechart' %>
+    <% if @campaign.owner_id != current_user.id %>
+    <div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
+      <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+    </div>
+    <% end %>
+  </div>
 
-<%= link_to 'legal doc 1', @campaign.document_1.url %><br>
-<%= link_to 'legal doc 2', @campaign.document_2.url %><br>
-<%= link_to 'legal doc 3', @campaign.document_3.url %><br>
+  <div class="allocation">
+    <h3>Allocate shares</h3>
+    <%= form_tag campaign_path(@campaign) do %>
+    <span class="pledge-search"><%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %></span>
+    <span class="pledge-search-submit"><%= submit_tag "Search", :name => nil %></span>
+    <div class="pledge-search-results"></div><br>
+    <%= form_tag campaign_path(@campaign) do %>
+    <%= label_tag(:name, "Name") %>
+    <input class="allocate-name" name="person[name]" type="text"/>
+    Percentage <input id="allocate-percentage" min="0.0" name="pledge[percentage]" step="0.5" type="number" />
+    <span class="submit-shares"><%= submit_tag "Send shares", :name => nil %></span>
+    <% end %>
+    <% end %>
+  </div><br>
 
-<%= render 'piechart' %>
-<% if @campaign.owner_id != current_user.id %>
-<div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
-  <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+  <div class="video-container">
+    <% if @campaign.video_link != "" %>
+    <%= raw(Campaign.youtube_embed(@campaign.video_link)) %>
+    <% end %>
+  </div>
+
+  <div class="legal-docs-container">
+    <h3> Legal Documents <h3>
+    <div class="docs">
+      <p> <%= link_to 'legal doc 1', @campaign.document_1.url %></p>
+      <p> <%= link_to 'legal doc 2', @campaign.document_2.url %></p>
+      <p> <%= link_to 'legal doc 3', @campaign.document_3.url %></p>
+    </div>
+  </div>
+
 </div>
-<% end %>

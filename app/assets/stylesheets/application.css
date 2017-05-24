@@ -42,3 +42,13 @@
 .allocation {
   display: none;
 }
+
+.left-half{
+  float: left;
+  width: 48%;
+}
+
+.right-half{
+  float: right;
+  width: 48%;
+}

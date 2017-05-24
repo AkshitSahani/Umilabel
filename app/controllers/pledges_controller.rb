@@ -15,7 +15,7 @@ before_action :load_pledge, only: [:show, :edit, :update, :destroy]
 
   def create
     @pledge = Pledge.new(pledge_params)
-    @pledge.save
+    @pledge.save!
   end
 
   def edit

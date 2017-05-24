@@ -170,7 +170,7 @@ $('.submit-shares').on('click', function(e){
     $('.allocation').fadeOut('slow');
   }).fail(function(){
     $('body').append($('<div>',{
-      text: 'Oops! Something went wrong. Please try again with all the fields completed',
+      text: 'Oops! Something went wrong. Please try again with all the fields correctly completed',
       class: 'allocation-failure'
     }))
 

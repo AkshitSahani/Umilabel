@@ -9,3 +9,15 @@
   <%= f.submit 'Send message'%>
 </div>
 <% end %>
+
+<% if @personal_message.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@personal_message.errors.count, "error") %> are between you and your profile right now:</h2>
+
+    <ul>
+    <% @personal_message.errors.full_messages.each do |msg| %>
+      <li> <%= msg %> </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
