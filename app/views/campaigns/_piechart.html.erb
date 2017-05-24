@@ -31,7 +31,7 @@
         data.addColumn('number', 'Percentage');
         data.addRows(response);
         // Set chart options
-        var options = {'title':'Click chart to invest/trade skill',
+        var options = {'title':('Price per share: ' + $('.share-price').html() ),
                        'width':400,
                        'height':300,
                         is3D: true};
@@ -76,7 +76,7 @@
               $('body').append(data);
             })
           }
-        }  
+        }
         }
       })
       }

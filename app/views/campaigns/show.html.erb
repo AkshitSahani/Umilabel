@@ -1,14 +1,14 @@
 <div class="left-half">
   <div class="title-img-container">
-    <div class="campaigner-img-sml"><%= image_tag @campaign.avatar.url(:thumb) %>
+    <div class="campaigner-img-sml"><%= image_tag(@campaign.avatar.url(:thumb), height: '65', width: '65') %>
     </div>
 
-    <div>
-      <h2> <span class="campaign-studio-name"><%= (User.find(@campaign.owner.id)).studio_name %></span> just released an IPO for the <span class="campaign-title"><%= @campaign.title %> </span> <br> album </h2>
+    <div class="campaign-notification">
+      <h2> <span class="campaign-studio-name"><%= (User.find(@campaign.owner.id)).studio_name %></span> just released an IPO for the <span class="campaign-title"><%= @campaign.title %> </span> album </h2>
     </div>
   </div>
-  <%= image_tag @campaign.album_cover.url(:medium) %>
-  <div class="ipo-now-avail"> IPO now available for <%= User.find(@campaign.owner.id).studio_name %>'s upcoming album "<%= @campaign.title %>"
+  <span class="campaign-album-image"><%= image_tag(@campaign.album_cover.url) %></span>
+  <div class="ipo-now-avail"> <b>IPO now available for <%= User.find(@campaign.owner.id).studio_name %>'s upcoming album "<%= @campaign.title %>"<b>
   </div>
 </div>
 
@@ -19,8 +19,9 @@
     </div>
 
     <div class="campaigner-avatar">
-      <%= image_tag @campaign.avatar.url(:medium) %>
+      <%= image_tag @campaign.avatar.url(:thumb) %>
     </div>
+  </div>
 
     <div class="campaign-title">
       <h3><%= @campaign.title %> album </h3>
@@ -29,7 +30,7 @@
     <div class="campaign-desc">
       <%= @campaign.description %>
     </div>
-  </div>
+
   <div class="messager"> Messenger
     <span class="close-chat">X</span>
     <span class="chat-content"></span>
@@ -52,6 +53,8 @@
     <% end %>
     </div>
   </div>
+
+  Price per share: <span class="share-price"><%= @campaign.share_price %></span>
 
   <div class="current-shares-container">
     <div class="buy-trade">Buy shares/trade skills for shares</div>

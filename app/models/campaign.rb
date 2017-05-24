@@ -37,7 +37,7 @@ class Campaign < ApplicationRecord
       youtube_id = $5
     end
 
-    %Q{<iframe title="YouTube video player" width="640" height="400" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe>}
+    %Q{<iframe title="YouTube video player" width="450" height="300" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe>}
   end
 
   def self.pie_chart(campaign)
