@@ -24,7 +24,11 @@
 
 <% if session[:user_id] != @user.id %>
   <div class="subscription_data" data-subscribee-id= '<%= session[:user_id] %>' data-subscribed-to-id= '<%= @user.id %>'>
+    <% if Subscription.where(subscribee_id: current_user.id).where(subscribed_to_id: @user.id).empty? %>
     <button class="subscribe">SUBSCRIBE</button>
+    <% else %>
+    <button class="subscribe">SUBSCRIBED!</button>
+    <% end %>
   </div>
   <%= link_to "message #{@user.username}", new_personal_message_path(receiver_id: @user.id) %>
 <% end %>

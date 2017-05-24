@@ -160,6 +160,13 @@ $('.submit-shares').on('click', function(e){
       $('.allocation-success').slideUp()
     }, 2000)
 
+    $('#chart_div').html('');
+    drawChart();
+
+    $('.pledge-search > input').val('');
+    $('.pledge-search-results').html('');
+    $('#allocate-percentage').val('');
+    $('.allocate-name').val('');
     $('.allocation').fadeOut('slow');
   }).fail(function(){
     $('body').append($('<div>',{

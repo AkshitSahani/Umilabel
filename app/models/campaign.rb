@@ -47,4 +47,16 @@ class Campaign < ApplicationRecord
     end
     array
   end
+
+  validates :title, :description, :share_price, presence: true
+  validates :title, uniqueness: true
+  validate :total_offering_less_than_or_equal_to_92
+
+  def total_offering_less_than_or_equal_to_92
+    if self.rewards.sum(:percentage) > 92
+      errors.add(:campaign, 'can only offer 92% of shares. 8% are offering costs of Umilabel')
+    end
+    # self.campaign.rewards.sum(:percentage) > 92
+    # Reward.where(campaign_id: self.campaign_id).sum(:percentage) > 92
+  end
 end

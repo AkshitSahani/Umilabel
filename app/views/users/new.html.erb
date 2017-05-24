@@ -16,3 +16,15 @@ Create your own account!
   <%= f.submit %>
 
 <% end %>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> are between you and your profile right now:</h2>
+
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li> <%= msg %> </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
