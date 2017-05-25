@@ -8,7 +8,7 @@
     </div>
   </div>
   <span class="campaign-album-image"><%= image_tag(@campaign.album_cover.url) %></span>
-  <div class="ipo-now-avail"> <b>IPO now available for <%= User.find(@campaign.owner.id).studio_name %>'s upcoming album "<%= @campaign.title %>"<b>
+  <div class="ipo-now-avail"> <b>IPO now available for <%= User.find(@campaign.owner.id).studio_name %>'s upcoming album "<%= @campaign.title %>"</b>
   </div>
 </div>
 
@@ -24,7 +24,7 @@
   </div>
 
     <div class="campaign-title">
-      <h3><%= @campaign.title %> album </h3>
+      <h3><%= @campaign.title %> ALBUM </h3>
     </div>
 
     <div class="campaign-desc">
@@ -36,7 +36,7 @@
     <span class="chat-content"></span>
   </div>
 
-  <div class="royalty-intial">
+  <div class="royalty-initial">
     <h2> Royalty Shares initial release </h2>
     <!-- <h3> Disclaimer </h3>
     <p>8% offering costs go to Umilabel directly. -->
@@ -54,20 +54,14 @@
     </div>
   </div>
 
-  Price per share: <span class="share-price"><%= @campaign.share_price %></span>
 
-  <div class="current-shares-container">
-    <div class="buy-trade">Buy shares/trade skills for shares</div>
-    <%= render 'piechart' %>
-    <% if @campaign.owner_id != current_user.id %>
-    <div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
-      <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
-    </div>
-    <% end %>
+  <br><div class="buy-trade">
+    Buy shares/trade skills for shares<br>
+    Price per share: <span class="share-price"><%= @campaign.share_price %></span>
   </div>
 
   <div class="allocation">
-    <h3>Allocate shares</h3>
+    <h2>Allocate shares</h2>
     <%= form_tag campaign_path(@campaign) do %>
     <span class="pledge-search"><%= text_field_tag :search, params[:search], placeholder: "Search users or campaigns" %></span>
     <span class="pledge-search-submit"><%= submit_tag "Search", :name => nil %></span>
@@ -79,7 +73,17 @@
     <span class="submit-shares"><%= submit_tag "Send shares", :name => nil %></span>
     <% end %>
     <% end %>
-  </div><br>
+  </div>
+
+  <div class="current-shares-container">
+    <%= render 'piechart' %>
+    <% if @campaign.owner_id != current_user.id %>
+    <div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
+      <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+    </div>
+    <% end %>
+  </div>
+
 
   <div class="video-container">
     <% if @campaign.video_link != "" %>
@@ -90,9 +94,26 @@
   <div class="legal-docs-container">
     <h3> Legal Documents <h3>
     <div class="docs">
-      <p> <%= link_to 'legal doc 1', @campaign.document_1.url %></p>
-      <p> <%= link_to 'legal doc 2', @campaign.document_2.url %></p>
-      <p> <%= link_to 'legal doc 3', @campaign.document_3.url %></p>
+      <% if @campaign.document_1.exists? %>
+        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 1', @campaign.document_1.url %></p>
+      <% end %>
+
+      <% if @campaign.document_2.exists? %>
+        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 2', @campaign.document_2.url %></p>
+      <% end %>
+
+      <% if @campaign.document_3.exists? %>
+        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 3', @campaign.document_3.url %></p>
+      <% end %>
+
+      <% if !(@campaign.document_1.exists? && @campaign.document_2.exists? && @campaign.document_3.exists?) %>
+        <% if current_user.id == @campaign.owner_id %>
+          <h5> Please provide the necessary legal documents before the campaign can be made live. Thank you</h5>
+        <% else %>
+          <h5> Legal documents not yet provided </h5>
+        <% end %>
+      <% end %>
+
     </div>
   </div>
 
