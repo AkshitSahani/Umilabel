@@ -31,6 +31,8 @@
       <%= @campaign.description %>
     </div>
 
+    <%= link_to 'Edit Campaign', edit_campaign_path(@campaign) %>
+
   <div class="messager"> Messenger
     <span class="close-chat">X</span>
     <span class="chat-content"></span>
@@ -38,8 +40,6 @@
 
   <div class="royalty-initial">
     <h2> Royalty Shares initial release </h2>
-    <!-- <h3> Disclaimer </h3>
-    <p>8% offering costs go to Umilabel directly. -->
     <div class="rewards-offering">
     <% @campaign.rewards.each do |reward| %>
       <div class="reward" data-reward-id="<%= reward.id%>" data-campaign-id="<%= @campaign.id %>">
@@ -52,12 +52,6 @@
       </div>
     <% end %>
     </div>
-  </div>
-
-
-  <br><div class="buy-trade">
-    Buy shares/trade skills for shares<br>
-    Price per share: <span class="share-price"><%= @campaign.share_price %></span>
   </div>
 
   <div class="allocation">
@@ -74,6 +68,12 @@
     <% end %>
     <% end %>
   </div>
+
+  <br><div class="buy-trade">
+    Buy shares/trade skills for shares<br>
+    Price per share: <span class="share-price"><%= @campaign.share_price %></span>
+  </div>
+
 
   <div class="current-shares-container">
     <%= render 'piechart' %>
@@ -94,16 +94,23 @@
   <div class="legal-docs-container">
     <h3> Legal Documents <h3>
     <div class="docs">
+
       <% if @campaign.document_1.exists? %>
-        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 1', @campaign.document_1.url %></p>
+          <%= link_to @campaign.document_1.url  do%>
+         <div><i class="fa fa-file-text" aria-hidden="true"></i> <span> Legal Document 1 </span> </div>
+        <% end %>
       <% end %>
 
       <% if @campaign.document_2.exists? %>
-        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 2', @campaign.document_2.url %></p>
+          <%= link_to @campaign.document_2.url  do%>
+         <div><i class="fa fa-file-text" aria-hidden="true"></i> <span> Legal Document 2 </span> </div>
+        <% end %>
       <% end %>
 
       <% if @campaign.document_3.exists? %>
-        <p> <i class="fa fa-file-text" aria-hidden="true"></i> <%= link_to 'legal document 3', @campaign.document_3.url %></p>
+          <%= link_to @campaign.document_3.url  do%>
+         <div><i class="fa fa-file-text" aria-hidden="true"></i> <span> Legal Document 3 </span> </div>
+        <% end %>
       <% end %>
 
       <% if !(@campaign.document_1.exists? && @campaign.document_2.exists? && @campaign.document_3.exists?) %>

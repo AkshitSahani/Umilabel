@@ -46,8 +46,9 @@
 
 .campaign-album-image > img {
   width: 100%;
-  height: 70%;
+  height: 600px;
 }
+
 
 .left-half{
   float: left;
@@ -116,12 +117,16 @@
   padding-left: 17%;
 }
 
-.allocation > h3 {
+.allocation > h2 {
   text-align: center;
 }
 
 .allocation > form {
   text-align: center;
+}
+
+#chart_div{
+  margin-left: 9%;
 }
 
 .pledge-search > input{
@@ -213,4 +218,12 @@
 .title-img-container {
   clear: both;
   overflow: hidden;
+}
+
+.fa-file-text {
+  float: none;
+  color: green;
+}
+.legal-docs-container > h3 {
+  margin-left: 2%;
 }

@@ -1,5 +1,6 @@
 class PledgesController < ApplicationController
 before_action :load_pledge, only: [:show, :edit, :update, :destroy]
+before_action :ensure_logged_in
 
   def index
     #code

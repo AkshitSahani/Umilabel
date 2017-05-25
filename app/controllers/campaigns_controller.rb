@@ -1,5 +1,6 @@
 class CampaignsController < ApplicationController
   before_action :load_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_logged_in, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @campaigns = Campaign.all

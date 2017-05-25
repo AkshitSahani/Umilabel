@@ -151,7 +151,7 @@ $('.submit-shares').on('click', function(e){
       user_id: $('.selected').attr('id')
     }}
   }).done(function(){
-    $('body').append($('<div>',{
+    $('.buy-trade').append('<br><br>').append($('<div>',{
       text: 'The shares have been successfully allocated',
       class: 'allocation-success'
     }))
@@ -169,7 +169,7 @@ $('.submit-shares').on('click', function(e){
     $('.allocate-name').val('');
     $('.allocation').fadeOut('slow');
   }).fail(function(){
-    $('body').append($('<div>',{
+    $('.allocation').append('<br>').append($('<div>',{
       text: 'Oops! Something went wrong. Please try again with all the fields correctly completed',
       class: 'allocation-failure'
     }))

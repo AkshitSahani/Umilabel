@@ -1,3 +1,14 @@
-<div class="intro">
-  <p>Welcome to umilabel!</p>
-</div>
+<br><br><% if current_user %>
+  <% current_user.subscribed_tos.each do |subs| %>
+    <% User.find(subs.subscribed_to_id).owned_campaigns.each do |camp| %>
+    <%= link_to campaign_path(camp) do %>
+      <div>
+        <%= camp.title %>
+        <%= image_tag(camp.album_cover.url(:medium)) %>
+        <%= image_tag camp.avatar.url(:thumb) %>
+        <%= User.find(camp.owner_id).username %>
+      </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
