@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_logged_in, only: [:show, :new, :create, :edit, :update, :destroy, :new_profile, :create_profile]
+  # before_action :ensure_logged_in, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -16,7 +16,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       session[:user_id] = @user.id
       redirect_to new_profile_path
@@ -48,6 +47,7 @@ class UsersController < ApplicationController
 
   def create_profile
     @user = User.find(session[:user_id])
+    byebug
     if @user.update_attributes(user_params)
       redirect_to user_path(@user)
     else
