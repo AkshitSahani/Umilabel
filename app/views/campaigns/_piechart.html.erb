@@ -37,51 +37,48 @@
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
 
-        google.visualization.events.addListener(chart, 'click', selectHandler);
+        google.visualization.events.addListener(chart, 'select', selectHandler);
         function selectHandler(){
-          var selection = chart.getSelection();
-          // var selection = chart.getValue();
-          console.log(selection);
-          console.log(selection[0]);
-          console.log(selection[0].row);
+          var selection = chart.getSelection()[0];
+        if (selection != undefined){
+          var value = data.getValue(selection.row, 0);
+        }
 
-          // var value = data.getFormattedValue(selection[0].row, 0);
-          // console.log(value);
 
-      // if ($('.user_is_campaigner').size() === 0) {
-      //
-      //     if (value != "Investors" && value != "investors" && value != "Investor" && value != "investor" && value != "myself" && value != "Myself" && value != $('.campaign-title').html() && value != ($('.campaign-studio-name').html()) && value != "Sold" && value != "sold" && value != "Umilabel" && value != "umilabel"){
-      //       $.ajax({
-      //         url:'/personal_messages/new',
-      //         method: 'GET',
-      //         data: {
-      //           receiver_id: $('.pledge-convo').attr('data-receiver-id')
-      //         }
-      //       }).done(function(data){
-      //         $('.chat-content').html(data);
-      //         $('.sendmessage > input').addClass('campaign-submit');
-      //         $('.sendmessage').removeClass('sendmessage');
-      //         $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
-      //
-      //         var hidden = $('.messager');
-      //         hidden.show().animate({right:"0px"}).addClass('visible');
-      //         selection = null;
-      //       })
-      //     }
-      //     else if (value === "Sold" || value === "sold" || value === "Umilabel" || value ==="umilabel" || value === "myself" || value === "Myself"){
-      //       //do nothing
-      //       selection = null;
-      //     }
-      //     else{
-      //       $.ajax({
-      //         url:'/charges/new',
-      //         method: "GET",
-      //       }).done(function(data){
-      //         $('body').append(data);
-      //         selection = null;
-      //       })
-      //     }
-      //   }
+      if ($('.user_is_campaigner').size() === 0) {
+
+          if (value != "Investors" && value != "investors" && value != "Investor" && value != "investor" && value != "myself" && value != "Myself" && value != $('.campaign-title').html() && value != ($('.campaign-studio-name').html()) && value != undefined && value != "Sold" && value != "sold" && value != "Umilabel" && value != "umilabel"){
+            $.ajax({
+              url:'/personal_messages/new',
+              method: 'GET',
+              data: {
+                receiver_id: $('.pledge-convo').attr('data-receiver-id')
+              }
+            }).done(function(data){
+              $('.chat-content').html(data);
+              $('.sendmessage > input').addClass('campaign-submit');
+              $('.sendmessage').removeClass('sendmessage');
+              $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
+
+              var hidden = $('.messager');
+              hidden.show().animate({right:"0px"}).addClass('visible');
+              selection = null;
+            })
+          }
+          else if (value === "Sold" || value === "sold" || value === "Umilabel" || value ==="umilabel" || value === "myself" || value === "Myself" || value === undefined){
+            //do nothing
+            selection = null;
+          }
+          else{
+            $.ajax({
+              url:'/charges/new',
+              method: "GET",
+            }).done(function(data){
+              $('body').append(data);
+              selection = null;
+            })
+          }
+        }
         }
       })
       }
