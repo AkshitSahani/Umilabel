@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      redirect_to user_path(@user)
+      redirect_to new_profile_path
     else
       render :edit
     end
@@ -47,7 +47,6 @@ class UsersController < ApplicationController
 
   def create_profile
     @user = User.find(session[:user_id])
-    byebug
     if @user.update_attributes(user_params)
       redirect_to user_path(@user)
     else
@@ -57,7 +56,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirmation, :studio_name, :description, :tags, :founded_in, :avatar, :background_image)
+    params.require(:user).permit(:full_name, :email, :password, :password_confirmation, :studio_name, :description, :tags, :founded_in, :avatar, :background_image)
   end
 
   def load_user

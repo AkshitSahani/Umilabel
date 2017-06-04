@@ -31,7 +31,9 @@
       <%= @campaign.description %>
     </div>
 
-    <%= link_to 'Edit Campaign', edit_campaign_path(@campaign) %>
+    <% if current_user.id == @campaign.owner_id  %>
+      <%= link_to 'Edit Campaign', edit_campaign_path(@campaign) %>
+    <% end %>
 
   <div class="messager"> Messenger
     <span class="close-chat">X</span>
@@ -79,7 +81,7 @@
     <%= render 'piechart' %>
     <% if @campaign.owner_id != current_user.id %>
     <div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
-      <%= link_to "Send a message to #{(User.find(@campaign.owner_id).username)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
+      <%= link_to "Send a message to #{(User.find(@campaign.owner_id).studio_name)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>
     </div>
     <% end %>
   </div>

@@ -124,7 +124,7 @@ $(document).ready(function(){
       $.each(data, function( j, i){
         $('.pledge-search-results').append(
           $('<div>', {
-            text: ''+ i['first_name'] + ' ' + i['last_name'] + ' | ' + i['studio_name'] + '',
+            text: ''+ i['full_name'] + ' | ' + i['studio_name'] + '',
             id: i['id'],
             class: 'allocation-searched-user'
             }

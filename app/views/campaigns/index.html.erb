@@ -16,7 +16,7 @@
   <% @users.map do |user| %>
     <%= link_to user_path(user.id) do %>
     <div>
-      <%= user.first_name  %> | <%= user.last_name %> | <%= user.username %> | <%= user.studio_name %>
+      <%= user.full_name  %> | <%= user.studio_name %>
     </div>
   <% end %>
  <% end %>

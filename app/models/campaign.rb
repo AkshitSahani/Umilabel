@@ -50,7 +50,7 @@ class Campaign < ApplicationRecord
 
   validates :title, :description, :share_price, presence: true
   validates :title, uniqueness: true
-  validate :total_offering_less_than_or_equal_to_92, on: :create
+  validate :total_offering_less_than_or_equal_to_92
 
   def total_offering_less_than_or_equal_to_92
     count = 0

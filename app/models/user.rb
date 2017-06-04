@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :backed_campaigns, :through => :rewards, source: :campaign
 
   def self.search(search)
-    User.where("first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR username LIKE ? OR studio_name LIKE ? OR tags LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+    User.where("full_name LIKE ? OR email LIKE ? OR studio_name LIKE ? OR tags LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 
   def self.split_tags(tags)
@@ -27,7 +27,8 @@ class User < ApplicationRecord
     return array
   end
 
-  validates :first_name, :last_name, :email, :username, presence: true
+  validates :full_name, :email, :studio_name, presence: true
+  validates :email, :studio_name, uniqueness: true
   validates :password, confirmation: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, format: {with: VALID_EMAIL_REGEX}, :uniqueness => {:case_sensitive => false}

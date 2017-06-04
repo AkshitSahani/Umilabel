@@ -6,7 +6,7 @@
         <%= camp.title %>
         <%= image_tag(camp.album_cover.url(:medium)) %>
         <%= image_tag camp.avatar.url(:thumb) %>
-        <%= User.find(camp.owner_id).username %>
+        <%= User.find(camp.owner_id).studio_name %>
       </div>
       <% end %>
     <% end %>
