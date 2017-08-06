@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  root 'sessions#index'
   devise_for :users, controllers: {registrations: 'users/registrations', sessions: 'users/sessions'}
   devise_scope :user do
     get '/profile_setup', to: "users/registrations#profile_setup", as: 'profile_setup'
@@ -8,7 +7,10 @@ Rails.application.routes.draw do
     get '/edit_profile', to: "users/registrations#edit_profile", as: 'edit_profile'
     patch '/update_profile', to: "users/registrations#update_profile", as: 'update_profile'
     get '/users/:id', to: "users/registrations#show", as: 'user'
+    get '/', to: 'users/sessions#index'
   end
+
+  root 'users/sessions#index'
 
   resources :campaigns do
     resources :rewards
