@@ -1,5 +1,9 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
+
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://s3-us-west-2.amazonaws.com/abett-static/default-avatar.jpg"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   has_attached_file :background_image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://s3-us-west-2.amazonaws.com/abett-static/default-avatar.jpg"
@@ -27,10 +31,5 @@ class User < ApplicationRecord
     return array
   end
 
-  validates :full_name, :email, :studio_name, presence: true
-  validates :email, :studio_name, uniqueness: true
-  validates :password, confirmation: true
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email, format: {with: VALID_EMAIL_REGEX}, :uniqueness => {:case_sensitive => false}
-
+  validates :full_name, :studio_name, presence: true
 end
