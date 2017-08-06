@@ -31,5 +31,5 @@ class User < ApplicationRecord
     return array
   end
 
-  validates :full_name, :studio_name, presence: true
+  # validates :full_name, :studio_name, presence: true
 end

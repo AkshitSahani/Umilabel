@@ -1,0 +1,27 @@
+<br><br>
+<%= form_for current_user, url: create_profile_path, method: :patch do |f| %>
+
+<%= f.label "Full Name" %>
+<%= f.text_area :full_name %><br>
+
+<%= f.label "Studio Name" %>
+<%= f.text_area :studio_name %><br>
+
+<%= f.label "When was your studio founded" %>
+<%= f.date_field :founded_in %><br>
+
+<%= f.label "Tell us about youself" %>
+<%= f.text_area :description %><br>
+
+<%= f.label "Tell us your skills in the world of music" %>
+<%= f.text_area :tags %><br>
+
+<%= f.label "Upload your Profile picture" %>
+<%= f.file_field :avatar %><br>
+
+<%= f.label "Upload your Profile Background Image" %>
+<%= f.file_field :background_image %><br>
+
+<%= f.submit "Create Profile" %>
+
+<% end %>

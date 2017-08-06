@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :load_subscription, only: [:show, :destroy]
-  before_action :ensure_logged_in, only: [:new, :create, :destroy]
+  before_action :user_signed_in?, only: [:new, :create, :destroy]
 
   def index
 

@@ -10,8 +10,6 @@ Rails.application.routes.draw do
     get '/users/:id', to: "users/registrations#show", as: 'user'
   end
 
-  resources :sessions, only: [:new, :create, :destroy]
-
   resources :campaigns do
     resources :rewards
   end
