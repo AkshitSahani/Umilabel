@@ -18,13 +18,17 @@
   <% end %>
 <% end %><br>
 
-<%= @user.founded_in %><br><br>
+<% if @user.founded_in %>
+  Studio Founded: <%= @user.founded_in %><br><br>
+<% end %>
 
-Portfolio:<% @user.pledges.each do |pledge| %>
-            <%= link_to campaign_path(pledge.reward.campaign) do %>
-              <%= pledge.reward.campaign.title %> (owns <%= pledge.percentage_pledged %>%)<br>
+<% if !(@user.pledges.empty?) %>
+  Portfolio:<% @user.pledges.each do |pledge| %>
+              <%= link_to campaign_path(pledge.reward.campaign) do %>
+                <%= pledge.reward.campaign.title %> (owns <%= pledge.percentage_pledged %>%)<br>
+              <% end %>
             <% end %>
-          <% end %>
+<% end %>
 
 <% if current_user.id != @user.id %>
   <div class="subscription_data" data-subscribee-id= '<%= current_user.id %>' data-subscribed-to-id= '<%= @user.id %>'>
