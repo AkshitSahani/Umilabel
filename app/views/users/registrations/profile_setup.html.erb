@@ -1,12 +1,6 @@
 <br><br>
 <%= form_for current_user, url: create_profile_path, method: :patch do |f| %>
 
-<%= f.label "Full Name" %>
-<%= f.text_area :full_name %><br>
-
-<%= f.label "Studio Name" %>
-<%= f.text_area :studio_name %><br>
-
 <%= f.label "When was your studio founded" %>
 <%= f.date_field :founded_in %><br>
 

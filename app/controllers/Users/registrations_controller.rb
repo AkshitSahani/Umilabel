@@ -8,9 +8,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    $full_name = params['user']['full_name']
+    super
+  end
 
   # GET /resource/edit
   # def edit

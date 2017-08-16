@@ -31,4 +31,8 @@ class User < ApplicationRecord
     return array
   end
 
+  def self.get_full_name
+    current_user.full_name
+  end
+
 end
