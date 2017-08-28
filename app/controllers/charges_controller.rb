@@ -1,11 +1,15 @@
 class ChargesController < ApplicationController
 
   def new
+    if request.xhr?
+      @campaign = Campaign.find(params['campaign_id'])
+      @amount = @campaign.share_price * 100
+    end
   end
 
   def create
     # Amount in cents
-    @amount = 500
+    @amount = Campaign.get_share_price.to_i * 100
 
     customer = Stripe::Customer.create(
       :email => params[:stripeEmail],

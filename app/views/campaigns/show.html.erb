@@ -72,13 +72,23 @@
   </div>
 
   <br><div class="buy-trade">
-    Buy shares/trade skills for shares<br>
-    Price per share: <span class="share-price"><%= @campaign.share_price %></span>
+    Buy shares/trade skills for shares<br><br>
+    Price per share: <span class="share-price"><%= @campaign.share_price %></span><br>
+    <button style="text-align:center;"class="buynow">Buy Now</button>
   </div>
 
+  <h5>You can also trade the following skills for shares:</h5>
+
+  <table style="width: 100%; text-align:center;">
+    <tr>
+      <th>Skill</th>
+      <th>% shares remaining</th>
+      <th>Trade</th><br>
+    </tr>
+  </table><br>
 
   <div class="current-shares-container">
-    <%= render 'piechart' %>
+    <%# render 'piechart' %>
     <% if @campaign.owner_id != current_user.id %>
     <div class="pledge-convo" data-receiver-id = "<%= @campaign.owner_id %>">
       <%= link_to "Send a message to #{(User.find(@campaign.owner_id).studio_name)}", new_personal_message_path(receiver_id: @campaign.owner_id) %><br>

@@ -182,6 +182,74 @@ $('.submit-shares').on('click', function(e){
 
   $('.allocate').on('click', function(){
     $('.allocation').fadeIn('100').attr('data-reward-id', ($(this).parent().attr('data-reward-id')));
-
   })
+
+  $('.buynow').on('click', function(){
+    $.ajax({
+      url:'/charges/new',
+      method: "GET",
+      data:{
+        campaign_id: $('.reward').attr('data-campaign-id')
+      }
+    }).done(function(data){
+      $('body').append(data);
+    })
+  })
+
+    var campaignId = $('.reward').attr('data-campaign-id');
+    $.ajax({
+      url:'/campaigns/' + campaignId + '/rewards',
+      method: 'GET',
+      dataType: 'json'
+    }).done(function(response){
+      for(var i=0; i< response.length; i++){
+        var tableRow = $('<tr>');
+        var skill = $('<td>').html(response[i][0]);
+        var percentageRemaining = $('<td>').html(response[i][1]);
+        var trade = $('<td>').html('<button class="ask-for-trade">Ask for Trade</button>');
+        $('table').append($(tableRow).append($(skill)).append($(percentageRemaining)).append($(trade)));
+      }
+    })
+
+    $('body').delegate('button.ask-for-trade', 'click', function(){
+      var value = $(this).parent().siblings().first().html();
+
+      if (value != "Investors" && value != "investors" && value != "Investor" && value != "investor" && value != "myself" && value != "Myself" && value != $('.campaign-title').html() && value != ($('.campaign-studio-name').html()) && value != undefined && value != "Sold" && value != "sold" && value != "Umilabel" && value != "umilabel"){
+        $.ajax({
+          url:'/personal_messages/new',
+          method: 'GET',
+          data: {
+            receiver_id: $('.pledge-convo').attr('data-receiver-id')
+          }
+        }).done(function(data){
+          $('.chat-content').html(data);
+          $('.sendmessage > input').addClass('campaign-submit');
+          $('.sendmessage').removeClass('sendmessage');
+          $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
+
+          var hidden = $('.messager');
+          hidden.show().animate({right:"0px"}).addClass('visible');
+          selection = null;
+        })
+      }
+      else if (value === "Sold" || value === "sold" || value === "Umilabel" || value ==="umilabel" || value === "myself" || value === "Myself" || value === undefined){
+        //do nothing
+        selection = null;
+      }
+      else{
+        $.ajax({
+          url:'/charges/new',
+          method: "GET",
+          data:{
+            campaign_id: $('.reward').attr('data-campaign-id')
+          }
+        }).done(function(data){
+          $('body').append(data);
+          selection = null;
+        })
+      }
+
+    })
+
+    // $('button.ask-for-trade').first().parent().siblings().first().html()
 })
