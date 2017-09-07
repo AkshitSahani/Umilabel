@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170806023919) do
+ActiveRecord::Schema.define(version: 20170907205438) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20170806023919) do
     t.integer  "album_cover_file_size"
     t.datetime "album_cover_updated_at"
     t.string   "video_link"
+    t.decimal  "owner_shares"
+    t.decimal  "purchasable_shares"
   end
 
   create_table "conversations", force: :cascade do |t|

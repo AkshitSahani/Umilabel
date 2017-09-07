@@ -6,7 +6,13 @@
   <%= f.text_area :description %><br>
 
   <%= f.label :Price_per_share %>
-  <%= f.number_field :share_price %><br>
+  <%= f.number_field :share_price, :step => 0.5 %><br>
+
+  <%= f.label :Shares_for_Yourself %>
+  <%= f.number_field :owner_shares, :step => 0.5  %><br>
+
+  <%= f.label :Purchasable_Share_percentage %>
+  <%= f.number_field :purchasable_shares, :step => 0.5  %><br>
 
   <%= f.label :Upload_an_avatar %>
   <%= f.file_field :avatar %><br>
