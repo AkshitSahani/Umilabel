@@ -75,7 +75,7 @@
     Buy shares/trade skills for shares<br><br>
     Price per share: <span class="share-price"><%= @campaign.share_price %></span><br>
     <button style="text-align:center;"class="buynow">Buy Now</button><br>
-    <span>Remaining shares: <%= @campaign.purchasable_shares %></span>
+    <span>Remaining shares: <%= @campaign.purchasable_shares %>% </span>
   </div>
 
   <h5>You can also trade the following skills for shares:</h5>
@@ -136,5 +136,7 @@
 
     </div>
   </div>
+
+  <span class="userid" style="display: none;"><%= current_user.id %></span>
 
 </div>

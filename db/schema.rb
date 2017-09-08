@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907205438) do
+ActiveRecord::Schema.define(version: 20170908182119) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170907205438) do
     t.string   "video_link"
     t.decimal  "owner_shares"
     t.decimal  "purchasable_shares"
+    t.decimal  "total_shares_num"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170907205438) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "percentage_pledged"
+    t.decimal  "num_shares_pledged"
   end
 
   create_table "rewards", force: :cascade do |t|

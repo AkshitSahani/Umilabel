@@ -1,0 +1,7 @@
+<%= form_for @pledge do |f| %>
+  <h3 style="text-align:center;">Do you want to purchase a <strong> number </strong> or <strong> percentage </strong> of shares? Choose one</h3>
+  Number of shares: <%= f.number_field :num_shares_pledged, step: 0.5 %><br><br>
+
+  Percentage of shares: <%= f.number_field :percentage_pledged, step: 0.5%><br><br>
+  <%= f.submit "Next", class: 'pledge-next' %>
+<% end %>

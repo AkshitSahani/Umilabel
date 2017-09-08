@@ -1,4 +1,5 @@
 <%= form_for @campaign do |f| %>
+  <span class="camp-id"><% @campaign.id %></span>
   <%= f.label :title %>
   <%= f.text_field :title %><br>
 
@@ -8,11 +9,14 @@
   <%= f.label :Price_per_share %>
   <%= f.number_field :share_price, :step => 0.5 %><br>
 
-  <%= f.label :Shares_for_Yourself %>
+  <%= f.label :Total_number_of_shares_available %>
+  <%= f.number_field :total_shares_num, :step => 0.5 %><br>
+
+  <%= f.label :Shares_for_Yourself%> (%)
   <%= f.number_field :owner_shares, :step => 0.5  %><br>
 
   <%= f.label :Purchasable_Share_percentage %>
-  <%= f.number_field :purchasable_shares, :step => 0.5  %><br>
+  <%= f.number_field :purchasable_shares, :step => 0.5, class: 'purchasable-shares'  %><br>
 
   <%= f.label :Upload_an_avatar %>
   <%= f.file_field :avatar %><br>
@@ -24,11 +28,11 @@
   <%= f.file_field :album_cover%><br>
 
   <%= f.label :Add_a_video %>
-  <%= f.text_field :video_link%><br>
+  <%= f.text_field :video_link, placeholder: "Add a url"%><br>
 
   <h2>Royalty Shares</h2>
   <h3> Disclaimer </h3>
-  <p>8% offering costs go to Umilabel directly. You can offer only up to 92% of shares. If you are not offering all remaining shares, kindly include those as 'not-offered' with the correct value.</p>
+  <p>8% offering cost goes to Umilabel directly. You can offer only up to 92% of shares. If you are not offering all remaining shares, kindly include those as <b>'not-offered'</b> with the correct value.</p>
 <div id="rewards">
   <%= f.fields_for :rewards do |r| %>
     <%= render 'reward_fields', f: r %>
@@ -46,5 +50,5 @@
   <%= f.label :Upload_legal_document_3 %>
   <%= f.file_field :document_3 %><br>
 
-    <%= f.submit 'Save Campaign' %>
+    <%= f.submit 'Save Campaign', class: 'save-campaign' %>
 <% end %>

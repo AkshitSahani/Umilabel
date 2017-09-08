@@ -185,36 +185,46 @@ $('.submit-shares').on('click', function(e){
   })
 
   $('.buynow').on('click', function(){
+    // $.ajax({
+    //   url:'/charges/new',
+    //   method: "GET",
+    //   data:{
+    //     campaign_id: $('.reward').attr('data-campaign-id')
+    //   }
+    // }).done(function(data){
+    //   $('body').append(data);
+    // })
+
     $.ajax({
-      url:'/charges/new',
-      method: "GET",
-      data:{
-        campaign_id: $('.reward').attr('data-campaign-id')
-      }
+      url:"/pledges/new",
+      method:"get"
     }).done(function(data){
-      $('body').append(data);
+      $('body').append($('<br>')).append($('<br>')).append($('<div>').addClass('buy-now-pledge').html(data));
+      $('#new_pledge').css('width', '48%');
     })
   })
 
-    var campaignId = $('.reward').attr('data-campaign-id');
-    $.ajax({
-      url:'/campaigns/' + campaignId + '/rewards',
-      method: 'GET',
-      dataType: 'json'
-    }).done(function(response){
-      for(var i=0; i< response.length; i++){
-        var tableRow = $('<tr>');
-        var skill = $('<td>').html(response[i][0]);
-        var percentageRemaining = $('<td>').html(response[i][1]);
-        var trade = $('<td>').html('<button class="ask-for-trade">Ask for Trade</button>');
-        $('table').append($(tableRow).append($(skill)).append($(percentageRemaining)).append($(trade)));
-      }
-    })
+    if ($('.allocation').size() === 1){
+      var campaignId = $('.reward').attr('data-campaign-id');
+      $.ajax({
+        url:'/campaigns/' + campaignId + '/rewards',
+        method: 'GET',
+        dataType: 'json'
+      }).done(function(response){
+        for(var i=0; i< response.length; i++){
+          if(response[i][0] !== "Investors"){
+            var tableRow = $('<tr>');
+            var skill = $('<td>').html(response[i][0]);
+            var percentageRemaining = $('<td>').html(response[i][1]);
+            var trade = $('<td>').html('<button class="ask-for-trade">Ask for Trade</button>');
+            $('table').append($(tableRow).append($(skill)).append($(percentageRemaining)).append($(trade)));
+          }
+        }
+      })
+    }
 
     $('body').delegate('button.ask-for-trade', 'click', function(){
       var value = $(this).parent().siblings().first().html();
-
-      if (value != "Investors" && value != "investors" && value != "Investor" && value != "investor" && value != "myself" && value != "Myself" && value != $('.campaign-title').html() && value != ($('.campaign-studio-name').html()) && value != undefined && value != "Sold" && value != "sold" && value != "Umilabel" && value != "umilabel"){
         $.ajax({
           url:'/personal_messages/new',
           method: 'GET',
@@ -222,34 +232,50 @@ $('.submit-shares').on('click', function(e){
             receiver_id: $('.pledge-convo').attr('data-receiver-id')
           }
         }).done(function(data){
-          $('.chat-content').html(data);
-          $('.sendmessage > input').addClass('campaign-submit');
-          $('.sendmessage').removeClass('sendmessage');
-          $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
+            $('.chat-content').html(data);
+            $('.sendmessage > input').addClass('campaign-submit');
+            $('.sendmessage').removeClass('sendmessage');
+            $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
 
-          var hidden = $('.messager');
-          hidden.show().animate({right:"0px"}).addClass('visible');
-          selection = null;
-        })
-      }
-      else if (value === "Sold" || value === "sold" || value === "Umilabel" || value ==="umilabel" || value === "myself" || value === "Myself" || value === undefined){
-        //do nothing
-        selection = null;
-      }
-      else{
-        $.ajax({
-          url:'/charges/new',
-          method: "GET",
-          data:{
-            campaign_id: $('.reward').attr('data-campaign-id')
-          }
-        }).done(function(data){
-          $('body').append(data);
-          selection = null;
-        })
-      }
-
+            var hidden = $('.messager');
+            hidden.show().animate({right:"0px"}).addClass('visible');
+          })
     })
 
+    $('body').delegate('.pledge-next', 'click', function(e){
+      e.preventDefault();
+      var userId = $('.userid').html();
+      var campaignId = $('.reward').attr('data-campaign-id');
+      $.ajax({
+        url:'/pledges',
+        method: 'get',
+        data:{
+          campaign_id: campaignId
+        },
+        dataType:'json'
+      }).done(function(data){
+        var rewardId = data[0];
+        var sharePrice = data[1];
+        var totalShares = data[2];
+
+        if($('#pledge_percentage_pledged').val() !== ""){
+          var percentagePledged = $('#pledge_percentage_pledged').val();
+        }
+        else if($('#pledge_num_shares_pledged').val() !== ""){
+          var percentagePledged = ($('#pledge_num_shares_pledged').val()/totalShares) * 100;
+        }
+
+        var chargeAmount = ((percentagePledged/100) * totalShares) * sharePrice;
+
+        console.log(rewardId);
+        console.log(sharePrice);
+        console.log(totalShares);
+        console.log(percentagePledged);
+        console.log(chargeAmount);
+
+        // make ajax call to paypal with charge amount. If successful, instantiate a new pledge for the reward in the database
+      })
+
+    })
     // $('button.ask-for-trade').first().parent().siblings().first().html()
 })
