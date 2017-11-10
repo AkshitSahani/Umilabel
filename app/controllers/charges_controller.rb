@@ -11,21 +11,33 @@ class ChargesController < ApplicationController
     # Amount in cents
     @amount = Campaign.get_share_price.to_i * 100
 
-    customer = Stripe::Customer.create(
-      :email => params[:stripeEmail],
-      :source  => params[:stripeToken]
-    )
+    if current_user.stripe_customer_id
 
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => 'Rails Stripe customer',
-      :currency    => 'usd'
-    )
+      charge = Stripe::Charge.create(
+        :customer    => current_user.stripe_customer_id,
+        :amount      => @amount,
+        :description => 'Rails Stripe customer',
+        :currency    => 'cad'
+      )
+    else
+      customer = Stripe::Customer.create(
+        :email => current_user.email,
+        :source  => params[:stripeToken]
+      )
 
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_charge_path
+      current_user.update_attributes(stripe_customer_id: customer.id)
+
+      charge = Stripe::Charge.create(
+        :customer    => customer.id,
+        :amount      => (@charge * 100).to_i, #because stripe expects charges in cents
+        :description => 'Rails Stripe customer',
+        :currency    => 'cad'
+      )
+    end
+
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_charge_path
+    end
   end
-
 end
